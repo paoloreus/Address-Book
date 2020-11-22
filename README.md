@@ -1,8 +1,4 @@
-# Address-Book By Yukina, Sam and Paolo
-# Java Group Project! Please insert your Student Names and ID below:
-
-# Paolo Tous - 101325245
-# Yukina Ishiguro - 101274311
-# Satabdi Sangma - 101287632
+# Use this branch if you're having issues with a specific file
+# Upload your file here so we can all take a look at it!
 
 
