@@ -32,45 +32,52 @@ public class COMP2130_Assignment2 extends Application {
         window.setTitle("Star Wars Address Book");
         
         //setting up Add section
-        add = new Button("Add Contact");
-        Label lblAdd = new Label("Add new contact to the list");
+        add = new Button("Add");
+        Label lblAdd = new Label("Add new contact:");
+        lblAdd.setMinSize(140, 10);
         HBox layAdd = new HBox(20);
-        layAdd.getChildren().addAll(add, lblAdd);
-        add.setMinSize(170, 20);
+        layAdd.getChildren().addAll(lblAdd, add);
+        add.setMinSize(100, 5);
         
         //setting up delete section
-        delete = new Button("Delete Contact");
-        Label lblDel = new Label("Delete contact from the list");
+        delete = new Button("Delete");
+        Label lblDel = new Label("Delete contact:");
+        lblDel.setMinSize(140, 10);
         HBox layDel = new HBox(20);
-        layDel.getChildren().addAll(delete, lblDel);
-        delete.setMinSize(170, 20);
+        layDel.getChildren().addAll(lblDel, delete);
+        delete.setMinSize(100, 5);
         
         //setting up edit section
-        edit = new Button("Edit Contact");
-        Label lblEd = new Label("Edit an existing account");
+        edit = new Button("Edit");
+        Label lblEd = new Label("Edit contact:");
+        lblEd.setMinSize(140, 10);
         HBox layEd = new HBox(20);
-        layEd.getChildren().addAll(edit, lblEd);
-        edit.setMinSize(170, 20);
+        layEd.getChildren().addAll(lblEd, edit);
+        edit.setMinSize(100, 5);
         
         //setting up viewall section
-        viewAll = new Button("View All Contacts");
-        Label lblViewAll = new Label("View all existing contacts in the list");
+        viewAll = new Button("View All");
+        Label lblViewAll = new Label("View all contacts:");
+        lblViewAll.setMinSize(140, 10);
         HBox layAll = new HBox(20);
-        layAll.getChildren().addAll(viewAll, lblViewAll);
-        viewAll.setMinSize(170, 20);
+        layAll.getChildren().addAll(lblViewAll, viewAll);
+        viewAll.setMinSize(100, 5);
         
         //setting up find section
-        find = new Button("Find Contact");
-        Label lblFind = new Label("Display info of an existing contact");
+        find = new Button("Find");
+        Label lblFind = new Label("Find contact:");
+        lblFind.setMinSize(140, 10);
         HBox layFind = new HBox(20);
-        layFind.getChildren().addAll(find, lblFind);
-        find.setMinSize(170, 20);
+        layFind.getChildren().addAll(lblFind, find);
+        find.setMinSize(100, 5);
         
         //setting up view by city section
-        view = new Button("View Contacts in a City");
-        Label lblCity = new Label("View a list of contacts within a city");
+        view = new Button("View");
+        Label lblCity = new Label("View contacts by city:");
+        lblCity.setMinSize(120, 10);
         HBox layCity = new HBox(20);
-        layCity.getChildren().addAll(view, lblCity);
+        layCity.getChildren().addAll(lblCity, view);
+        view.setMinSize(100, 5);
         
         //setting up home layout
         Label lblHome = new Label("Welcome to our Address Book");        
