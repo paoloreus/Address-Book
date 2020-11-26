@@ -56,6 +56,10 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         cm = new ContactManager(1000);
         window = primaryStage;
         window.setTitle("Star Wars Address Book");
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
         
         //setting up Add section
         btnAdd = new Button("Add");
@@ -118,8 +122,21 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         window.setScene(home);
         window.show();
     }
+    
+     public void closeProgram(){
+    
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setContentText("Are you sure you want to exit the application?");
+            alert.showAndWait();
+            if(alert.getResult() == ButtonType.OK){
+            Alert confirm = new Alert(AlertType.INFORMATION);
+            confirm.setContentText("Thank you for using Star Wars Address Book!");
+            confirm.showAndWait();
+            window.close();
+            }
+    }
 
-   
+    
     public void handle(ActionEvent e){
         
         if(e.getSource() == btnAdd){
@@ -380,9 +397,13 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
      
       }
     
+    
+    
     public static void main(String[] args) {
         launch(args);
         
     }
+    
+   
     
 }
