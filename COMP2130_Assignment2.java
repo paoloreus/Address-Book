@@ -337,7 +337,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         
         VBox[] layVert = new VBox[cm.getNumContacts()];
      for(int i = 0; i < cm.getNumContacts(); i++){
-         c = cm.getContacts()[i];
+         Contact cont = cm.getContacts()[i];
     //setting up name
     Label lblfullName = new Label("Contact Name:");    
     Label lblName = new Label(cm.getContacts()[i].getFirstName() + " " + cm.getContacts()[i].getLastName());
@@ -347,7 +347,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
     layName.getChildren().addAll(lblfullName, lblName);
     Button btnManage = new Button("Manage Contact");
     btnManage.setVisible(isEditable);
-    btnManage.setOnAction(e -> addPage(window, true, c));
+    btnManage.setOnAction(e -> addPage(window, true, cont));
     
     //setting up birthdays
     Label lblBday = new Label("Date of Birth:");
@@ -368,7 +368,11 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
      
      VBox layDisplay = new VBox(10);   
      layDisplay.getChildren().addAll(layVert);
-     layDisplay.getChildren().add(btnBack);
+     
+     VBox layBack = new VBox(10);
+     layBack.setAlignment(Pos.BOTTOM_CENTER);
+     layBack.getChildren().add(btnBack);
+     layDisplay.getChildren().add(layBack);
       
      view = new Scene(layDisplay, 500, 500);
      window.setScene(view);
