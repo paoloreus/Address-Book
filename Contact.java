@@ -44,7 +44,7 @@ public class Contact {
         return lastName;
     }
     
-    public void setLastName(){
+    public void setLastName(String lastName){
         this.lastName = lastName;
     }
     
@@ -60,7 +60,7 @@ public class Contact {
         return workPhone;
     }
     
-    public void setWorkPhone(){
+    public void setWorkPhone(String workPhone){
         this.workPhone = workPhone;
     }
     

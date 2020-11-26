@@ -20,4 +20,26 @@ public class ContactManager {
         contactList = new Contact[maxContacts];
         
     }
+    
+    public boolean addContact(String firstName, String lastName, String homePhone, String workPhone, Address homeAddress,
+    String email, MyDate birthday, String notes){
+        
+        if(numContacts < maxContacts){
+            contactList[numContacts] = new Contact(firstName, lastName, homePhone, workPhone, homeAddress, email, birthday, notes);
+            numContacts++;
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public Contact[] getContacts(){
+        return contactList;
+    }
+    
+    public int getNumContacts(){
+        return numContacts;
+    }
+    
+   
 }

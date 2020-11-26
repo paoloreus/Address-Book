@@ -28,6 +28,10 @@ public void setDay(int d){
     day = d;
 }
 
+public int getMonth(){
+    return month;
+}
+
 public String getMonthShortForm(){
     if(month == 1){ return "Jan"; }
     else if(month == 2){ return "Feb"; }
