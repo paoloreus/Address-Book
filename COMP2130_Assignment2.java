@@ -43,8 +43,9 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
     Scene home;
     Scene addPage;
     Scene view;
-    
+    Scene search;
     Stage window;
+    Scene viewOne;
     
     ContactManager cm;
     Contact c;
@@ -98,6 +99,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         
         //setting up find section
         btnFind = new Button("Find");
+        btnFind.setOnAction(e -> search(window, cm));
         Label lblFind = new Label("Find contact:");
         lblFind.setMinSize(140, 10);
         HBox layFind = new HBox(20);
@@ -148,6 +150,8 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
             display(window, false, cm);
             
         }
+        
+        
         
        
         
@@ -273,6 +277,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layNotes.getChildren().addAll(notes, txtNotes);
         
         Label message = new Label("Add New Contact");
+        if(isEditable){message.setText("Manage Contact");}
         message.setFont(Font.font(30));
         Button btnSubmit = new Button("Submit");
         VBox laySubmit = new VBox(10);
@@ -397,6 +402,76 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
      
       }
     
+    public void displayOne(Stage window, Contact c){
+        
+        //setting up full name
+        Label lblFullName = new Label("Contact Name:");
+        Label lblName = new Label(c.getFirstName() + " " + c.getLastName());
+        lblFullName.setMinSize(140, 10);
+        lblName.setMinSize(140, 10);
+        HBox layName = new HBox(20);
+        layName.getChildren().addAll(lblFullName, lblName);
+        
+        //setting up birthday
+        Label lblBday = new Label("Date of Birth:");
+        Label lblBirthday = new Label(c.getBirthday().getMonthLongForm() + c.getBirthday().getDay() + ", " +
+                c.getBirthday().getYear());
+        lblBday.setMinSize(140, 10);
+        lblBirthday.setMinSize(140, 10);
+        HBox layBday = new HBox(20);
+        layBday.getChildren().addAll(lblBday, lblBirthday);
+        
+        //setting up button
+        Button btnManage = new Button("Manage Contact");
+        btnManage.setOnAction(e -> addPage(window, true, c));
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(layName, layBday, btnManage);
+        
+        viewOne = new Scene(layout, 500, 500);
+        window.setScene(viewOne);
+        
+    }
+    
+    
+    public void search(Stage window, ContactManager cm){
+        
+        //setting up first name
+        Label lblFirst = new Label("First Name:");
+        TextField txtFirstName = new TextField();
+        lblFirst.setMinSize(140, 10);
+        HBox layFirstN = new HBox(20);
+        layFirstN.getChildren().addAll(lblFirst, txtFirstName);
+        
+        //setting up last name
+        Label lblLastN = new Label("Last Name:");
+        TextField txtLastName = new TextField();
+        lblLastN.setMinSize(140, 10);
+        HBox layLast = new HBox(20);
+        layLast.getChildren().addAll(lblLastN, txtLastName);
+        
+        Button btnSearch = new Button("Search");
+       
+      
+       
+        VBox layButton = new VBox(10);
+        layButton.getChildren().add(btnSearch);
+        layButton.setAlignment(Pos.CENTER);
+      
+        btnSearch.setOnAction(e ->{
+           Contact con = cm.findContact(txtFirstName.getText(), txtLastName.getText());
+           //addPage(window, true, con);
+           displayOne(window, con);
+                });
+        
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(layFirstN, layLast, layButton);
+        
+        search = new Scene(layout, 500, 500);
+        window.setScene(search);
+        
+        
+      
+    }
     
     
     public static void main(String[] args) {

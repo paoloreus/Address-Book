@@ -41,5 +41,15 @@ public class ContactManager {
         return numContacts;
     }
     
+    public Contact findContact(String firstN, String lastN){
+        for(int i = 0; i < numContacts; i++){
+            if(firstN.equals(contactList[i].getFirstName()) && lastN.equals(contactList[i].getLastName())){
+                return contactList[i];
+            }
+        }
+        
+        return null;
+    }
+   
    
 }
