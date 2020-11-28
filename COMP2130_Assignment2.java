@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 import static javax.swing.text.StyleConstants.Italic;
 
 
-public class COMP2130_Assignment2 extends Application implements EventHandler<ActionEvent>{
+public class COMP2130_Assignment2 extends Application{
     
     Button btnAdd;
     Button btnDelete;
@@ -64,7 +64,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         
         //setting up Add section
         btnAdd = new Button("Add");
-        btnAdd.setOnAction(this);
+        btnAdd.setOnAction(e -> addPage(window, false, c));
         Label lblAdd = new Label("Add new contact:");
         lblAdd.setMinSize(140, 10);
         HBox layAdd = new HBox(20);
@@ -95,7 +95,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         HBox layAll = new HBox(20);
         layAll.getChildren().addAll(lblViewAll, btnViewAll);
         btnViewAll.setMinSize(100, 5);
-        btnViewAll.setOnAction(this);
+        btnViewAll.setOnAction(e -> display(window, false, cm));
         
         //setting up find section
         btnFind = new Button("Find");
@@ -125,6 +125,8 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         window.show();
     }
     
+    
+    //any close request will be redirected to and handled from here
     public void closeProgram(){
     
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -138,36 +140,12 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
             }
     }
 
-    
-    public void handle(ActionEvent e){
-        
-        if(e.getSource() == btnAdd){
-            addPage(window, false, c);
-        }
-        
-        if(e.getSource() == btnViewAll){
-            
-            display(window, false, cm);
-            
-        }
-        
-        
-        
-       
-        
-      
-    }
-    
-    public boolean isValid(TextField txt){
-        if(txt.getText() == null || txt.getText().trim().isEmpty() || txt.getText().length() < 1){
-        return false;
-        }
-        
-        return true;
-        
-    }
-    
+    //this method checks if a field is numeric or not  
     public boolean isValidNumeric(TextField txt, int type){
+        
+        //type 1 means numeric field
+        //type 2 means alphabet field
+        //any other type means it's a field that can have both numbers and alphabets
         
          if(txt.getText() == null || txt.getText().trim().isEmpty() || txt.getText().length() < 1){
         return false;
@@ -191,7 +169,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
     public void addPage(Stage window, boolean isEditable, Contact c){
         
         //setting up first name
-        Label firstName = new Label("First Name:");
+        Label firstName = new Label("First Name*:");
         firstName.setMinSize(140, 10);
         TextField txtFirst = new TextField();
         if(isEditable){txtFirst.setText(c.getFirstName());}
@@ -199,7 +177,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layFirst.getChildren().addAll(firstName, txtFirst);
         
         //setting up last name
-        Label lastName = new Label("Last Name:");
+        Label lastName = new Label("Last Name*:");
         lastName.setMinSize(140, 10);
         TextField txtLast = new TextField();
         if(isEditable){txtLast.setText(c.getLastName());}
@@ -207,7 +185,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         laySecond.getChildren().addAll(lastName, txtLast);
         
         //setting up home phone
-        Label phone = new Label("Home Phone:");
+        Label phone = new Label("Home Phone*:");
         phone.setMinSize(140, 10);
         TextField txtPhone = new TextField();
         if(isEditable){txtPhone.setText(c.getHomePhone());}
@@ -224,7 +202,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layWork.getChildren().addAll(work, txtWork);
         
         //setting up street address1
-        Label home1 = new Label("Street Address 1:");
+        Label home1 = new Label("Street Address 1*:");
         home1.setMinSize(140, 10);
         TextField txtAddress1 = new TextField();
         if(isEditable){txtAddress1.setText(c.getHomeAddress().streetInfo1);}
@@ -240,7 +218,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layAddress2.getChildren().addAll(home2, txtAddress2);
         
         //setting up city 
-        Label city = new Label("City:");
+        Label city = new Label("City*:");
         city.setMinSize(140, 10);
         TextField txtCity = new TextField();
         if(isEditable){txtCity.setText(c.getHomeAddress().city);}
@@ -248,7 +226,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layCity.getChildren().addAll(city, txtCity);
         
         //setting up postal code
-        Label postalCode = new Label("Postal Code:");
+        Label postalCode = new Label("Postal Code*:");
         postalCode.setMinSize(140, 10);
         TextField txtPostal = new TextField();
         if(isEditable){txtPostal.setText(c.getHomeAddress().postalCode);}
@@ -256,7 +234,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layPostal.getChildren().addAll(postalCode, txtPostal);
         
         //setting up province
-        Label province = new Label("Province:");
+        Label province = new Label("Province*:");
         province.setMinSize(140, 10);
         TextField txtProvince = new TextField();
         if(isEditable){txtProvince.setText(c.getHomeAddress().province);}
@@ -264,7 +242,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layProvince.getChildren().addAll(province, txtProvince);
         
         //setting up country
-        Label country = new Label("Country:");
+        Label country = new Label("Country*:");
         country.setMinSize(140, 10);
         TextField txtCountry = new TextField();
         if(isEditable){txtCountry.setText(c.getHomeAddress().country);}
@@ -272,7 +250,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layCountry.getChildren().addAll(country, txtCountry);
         
         //setting up email
-        Label email = new Label("Email:");
+        Label email = new Label("Email*:");
         email.setMinSize(140, 10);
         TextField txtEmail = new TextField();
         if(isEditable){txtEmail.setText(c.getEmail());}
@@ -280,7 +258,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layEmail.getChildren().addAll(email, txtEmail);
         
         //setting up birthday
-        Label birthday = new Label("Date of Birth:");
+        Label birthday = new Label("Date of Birth*:");
         TextField txtYear = new TextField();
         if(isEditable){txtYear.setText(Integer.toString(c.getBirthday().getYear()));}
         txtYear.setPromptText("Year");
@@ -308,6 +286,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layNotes.getChildren().addAll(notes, txtNotes);
         
         Label message = new Label("Add New Contact");
+        Label note = new Label("Note: (Fields that contain asterisk (*) are required fields)");
         if(isEditable){message.setText("Manage Contact");}
         message.setFont(Font.font(30));
         Button btnSubmit = new Button("Submit");
@@ -318,9 +297,9 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         
         VBox layout = new VBox(10);
         layout.getChildren().addAll(message, layFirst, laySecond, layPhone, layWork, layAddress1, layAddress2, layCity, layPostal,
-        layProvince, layCountry, layEmail, layBirthday, layNotes, laySubmit);
+        layProvince, layCountry, layEmail, layBirthday, layNotes, laySubmit, note);
         
-        addPage = new Scene(layout, 400, 630);
+        addPage = new Scene(layout, 400, 660);
         
         btnBack.setOnAction( e -> window.setScene(home));
         
@@ -328,9 +307,9 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
          btnSubmit.setOnAction(e ->{
              
          if(isValidNumeric(txtFirst, 1) && isValidNumeric(txtLast, 1) && isValidNumeric(txtPhone, 2)
-           && isValid(txtAddress1) && isValidNumeric(txtCity, 1)
-           && isValid(txtPostal) && isValidNumeric(txtProvince, 1) && isValidNumeric(txtCountry, 1)
-           && isValid(txtEmail) && isValidNumeric(txtYear, 2)
+           && isValidNumeric(txtAddress1, 3) && isValidNumeric(txtCity, 1)
+           && isValidNumeric(txtPostal, 3) && isValidNumeric(txtProvince, 1) && isValidNumeric(txtCountry, 1)
+           && isValidNumeric(txtEmail, 3) && isValidNumeric(txtYear, 2)
            && isValidNumeric(txtMonth, 2) && isValidNumeric(txtDay, 2)){
         //making a new address object using the address related input
         address = new Address(txtAddress1.getText(), txtAddress2.getText(), txtCity.getText(), txtPostal.getText(),
@@ -381,9 +360,8 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
          }
          else {
              Alert alert = new Alert(AlertType.ERROR);
-             alert.setContentText("Please make sure all inputs are valid");
-             alert.showAndWait();
-             
+             alert.setContentText("Please make sure all required inputs are valid");
+             alert.showAndWait();             
          }
              
                  
@@ -395,7 +373,6 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         
                
     }
-    
     
     public void display(Stage window, boolean isEditable, ContactManager cm) {
     
