@@ -125,7 +125,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         window.show();
     }
     
-     public void closeProgram(){
+    public void closeProgram(){
     
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setContentText("Are you sure you want to exit the application?");
@@ -158,6 +158,36 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
       
     }
     
+    public boolean isValid(TextField txt){
+        if(txt.getText() == null || txt.getText().trim().isEmpty() || txt.getText().length() < 1){
+        return false;
+        }
+        
+        return true;
+        
+    }
+    
+    public boolean isValidNumeric(TextField txt, int type){
+        
+         if(txt.getText() == null || txt.getText().trim().isEmpty() || txt.getText().length() < 1){
+        return false;
+        }
+        
+        if(type == 2){ 
+        if(!txt.getText().matches("-?\\d+(\\.\\d+)?")){
+            return false;
+        }
+        }
+        
+        else if(type == 1){
+             if(txt.getText().matches("-?\\d+(\\.\\d+)?")){
+            return false;
+        }
+        }
+         
+         return true;
+    }
+    
     public void addPage(Stage window, boolean isEditable, Contact c){
         
         //setting up first name
@@ -183,6 +213,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         if(isEditable){txtPhone.setText(c.getHomePhone());}
         HBox layPhone = new HBox(20);
         layPhone.getChildren().addAll(phone, txtPhone);
+        //if(txtPhone.getText() == null || txtPhone.getText().trim().isEmpty()){isValid = false;}
         
         //setting up work phone
         Label work = new Label("Work Phone:");
@@ -295,7 +326,11 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
          //setting up submit
          btnSubmit.setOnAction(e ->{
              
-             
+         if(isValidNumeric(txtFirst, 1) && isValidNumeric(txtLast, 1) && isValidNumeric(txtPhone, 2)
+           && isValid(txtAddress1) && isValidNumeric(txtCity, 1)
+           && isValid(txtPostal) && isValidNumeric(txtProvince, 1) && isValidNumeric(txtCountry, 1)
+           && isValid(txtEmail) && isValidNumeric(txtYear, 2)
+           && isValidNumeric(txtMonth, 2) && isValidNumeric(txtDay, 2)){
         //making a new address object using the address related input
         address = new Address(txtAddress1.getText(), txtAddress2.getText(), txtCity.getText(), txtPostal.getText(),
          txtProvince.getText(), txtCountry.getText());
@@ -305,6 +340,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         dateBirth = new MyDate(Integer.parseInt(txtDay.getText()), Integer.parseInt(txtMonth.getText()),
         Integer.parseInt(txtYear.getText()));
         //System.out.println((int) getBirthday.getDayOfMonth());
+        
         
         if(!isEditable){
         boolean isSuccess = cm.addContact(txtFirst.getText(), txtLast.getText()
@@ -341,7 +377,13 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
             }
         }
         
+         }
+         else {
+             Alert alert = new Alert(AlertType.ERROR);
+             alert.setContentText("Please make sure all inputs are valid");
+             alert.showAndWait();
              
+         }
              
                  
                
