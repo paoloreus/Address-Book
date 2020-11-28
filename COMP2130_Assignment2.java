@@ -311,9 +311,10 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         if(isEditable){message.setText("Manage Contact");}
         message.setFont(Font.font(30));
         Button btnSubmit = new Button("Submit");
-        VBox laySubmit = new VBox(10);
+        Button btnBack = new Button("Back");
+        HBox laySubmit = new HBox(5);
         laySubmit.setAlignment(Pos.CENTER);
-        laySubmit.getChildren().add(btnSubmit);
+        laySubmit.getChildren().addAll(btnSubmit, btnBack);
         
         VBox layout = new VBox(10);
         layout.getChildren().addAll(message, layFirst, laySecond, layPhone, layWork, layAddress1, layAddress2, layCity, layPostal,
@@ -321,7 +322,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         
         addPage = new Scene(layout, 400, 630);
         
-       
+        btnBack.setOnAction( e -> window.setScene(home));
         
          //setting up submit
          btnSubmit.setOnAction(e ->{
@@ -427,7 +428,7 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
     
      }
      
-     Button btnBack = new Button("Back to Main");
+     Button btnBack = new Button("Back");
      btnBack.setOnAction(e -> window.setScene(home));
      
      VBox layDisplay = new VBox(10);   
@@ -465,9 +466,14 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         
         //setting up button
         Button btnManage = new Button("Manage Contact");
+        Button btnBack = new Button("Back");
+        btnBack.setOnAction( e-> window.setScene(search));
         btnManage.setOnAction(e -> addPage(window, true, c));
+        HBox layButton = new HBox(5);
+        layButton.getChildren().addAll(btnManage, btnBack);
+        
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(layName, layBday, btnManage);
+        layout.getChildren().addAll(layName, layBday, layButton);
         
         viewOne = new Scene(layout, 500, 500);
         window.setScene(viewOne);
@@ -492,17 +498,28 @@ public class COMP2130_Assignment2 extends Application implements EventHandler<Ac
         layLast.getChildren().addAll(lblLastN, txtLastName);
         
         Button btnSearch = new Button("Search");
+        Button btnBack = new Button("Back");
        
-      
        
-        VBox layButton = new VBox(10);
-        layButton.getChildren().add(btnSearch);
+        HBox layButton = new HBox(5);
+        layButton.getChildren().addAll(btnSearch, btnBack);
         layButton.setAlignment(Pos.CENTER);
       
+        btnBack.setOnAction(e -> window.setScene(home));
+        
         btnSearch.setOnAction(e ->{
-           Contact con = cm.findContact(txtFirstName.getText(), txtLastName.getText());
+         Contact con = cm.findContact(txtFirstName.getText(), txtLastName.getText());
+            
+        
            //addPage(window, true, con);
+           if(con != null){
            displayOne(window, con);
+           }
+           else {
+               Alert alert = new Alert(AlertType.INFORMATION);
+               alert.setContentText("Contact Not Found");
+               alert.showAndWait();
+           }
                 });
         
         VBox layout = new VBox(10);
