@@ -50,6 +50,19 @@ public class ContactManager {
         
         return null;
     }
+    
+    public boolean deleteContact(String firstN, String lastN){
+        
+        for(int i = 0; i < numContacts; i++){
+            if(firstN.equals(contactList[i].getFirstName()) && lastN.equals(contactList[i].getLastName())){
+                contactList[i] = contactList[numContacts - 1];
+                numContacts --;
+                return true;
+            }
+        }
+        
+        return false;
+    }
    
    
 }
