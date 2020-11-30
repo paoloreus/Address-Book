@@ -125,6 +125,7 @@ public class COMP2130_Assignment2 extends Application {
 
         //setting up home layout
         Label lblHome = new Label("Welcome to our Address Book");
+        lblHome.setFont(Font.font(30));
         VBox homeLayout = new VBox(30);
         homeLayout.getChildren().addAll(lblHome, layAdd, layDel, layEd, layAll, layFind, layCity);
 
