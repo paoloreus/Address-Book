@@ -30,12 +30,12 @@ public class Address {
     public String toString(){
         String s = "";
         
-        s += "Address: \n";
+        s += "Address: ";
         s += "Street: " + streetInfo1 + " " + streetInfo2 + "\n";
         s += "City: " + city + "\n";
         s += "Postal Code: " + postalCode + "\n";
         s += "Province: " + province + "\n";
-        s += "Country: " + country + "\n";
+        s += "Country: " + country;
         return s;
     }
 }

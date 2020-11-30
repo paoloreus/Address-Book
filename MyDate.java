@@ -87,7 +87,7 @@ public void setYear(int y){
 public String toString(){
     String s = "";
     
-    s += "Date of Birth: \n";
+    s += "Date of Birth: ";
     s += getMonthLongForm() + " " + day + ", " + year;
     return s;
 }

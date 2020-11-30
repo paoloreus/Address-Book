@@ -63,6 +63,32 @@ public class ContactManager {
         
         return false;
     }
+    
+    public Contact[] findByCity(String city){
+        
+        Contact[] temp = new Contact[maxContacts];
+        Contact[] listByCity;
+        int count = 0;
+        
+        for(int i = 0; i < numContacts; i++){
+            if(city.equals(contactList[i].getHomeAddress().city)){
+                temp[count] = contactList[i];
+                count++;
+            }
+        }
+        
+        listByCity = new Contact[count];
+        for(int i = 0; i < count; i++){
+            listByCity[i] = temp[i];
+        }
+        
+        if(count > 0){
+        return listByCity;
+        }
+        
+        return null;
+        
+    }
    
    
 }

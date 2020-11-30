@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+* Name: Paolo Tous      -- ID: 101325245
+* Name: Yukina Ishiguro -- ID: 101274311
+* Name: Satabdi Sangma  -- ID: 101287632
  */
 package comp2130_assignment2;
 
@@ -49,6 +49,10 @@ public class COMP2130_Assignment2 extends Application {
     Scene search;
     Stage window;
     Scene viewOne;
+    Scene searchCity;
+    Scene viewByCity;
+    Scene displayAll;
+    Scene display;
 
     ContactManager cm;
     Contact c;
@@ -112,6 +116,7 @@ public class COMP2130_Assignment2 extends Application {
 
         //setting up view by city section
         btnView = new Button("View");
+        btnView.setOnAction(e -> searchCity(window, cm));
         Label lblCity = new Label("View contacts by city:");
         lblCity.setMinSize(120, 10);
         HBox layCity = new HBox(20);
@@ -597,6 +602,11 @@ public class COMP2130_Assignment2 extends Application {
             btnManage.setVisible(isEditable);
             btnManage.setOnAction(e -> addPage(window, true, cont));
 
+            //setting up display details button
+            //in case user wanted to view detailed info about a contact
+            Button btnDetails = new Button("View Contact Details");
+            btnDetails.setOnAction(e -> displayAllDetails(window, cont));
+
             //setting up birthdays
             Label lblBday = new Label("Date of Birth:");
             Label lblBirthday = new Label(cm.getContacts()[i].getBirthday().getMonthLongForm() + " "
@@ -607,7 +617,7 @@ public class COMP2130_Assignment2 extends Application {
             layBirthday.getChildren().addAll(lblBday, lblBirthday);
 
             layVert[i] = new VBox(10);
-            layVert[i].getChildren().addAll(layName, layBirthday, btnManage);
+            layVert[i].getChildren().addAll(layName, layBirthday, btnDetails, btnManage);
 
         }
 
@@ -626,6 +636,23 @@ public class COMP2130_Assignment2 extends Application {
         view = new Scene(layDisplay, 500, 500);
         window.setScene(view);
 
+    }
+
+    public void displayAllDetails(Stage window, Contact c) {
+
+        Label lblDetails = new Label(c.toString());
+        Button btnBack = new Button("Back");
+        btnBack.setOnAction(e -> window.setScene(home));
+
+        VBox layDisplay = new VBox(30);
+        VBox layBack = new VBox(10);
+        layDisplay.getChildren().addAll(lblDetails);
+        layBack.getChildren().add(btnBack);
+        layBack.setAlignment(Pos.CENTER);
+        layDisplay.getChildren().add(layBack);
+
+        displayAll = new Scene(layDisplay, 500, 500);
+        window.setScene(displayAll);
     }
 
     public void displayOne(Stage window, boolean isDeletable, Contact c) {
@@ -654,6 +681,8 @@ public class COMP2130_Assignment2 extends Application {
         }
         Button btnBack = new Button("Back");
         btnBack.setOnAction(e -> window.setScene(search));
+        Button btnDetails = new Button("View Contact Details");
+        btnDetails.setOnAction(e -> displayAllDetails(window, c));
         btnManage.setOnAction(e -> {
             if (!isDeletable) {
                 addPage(window, true, c);
@@ -665,11 +694,15 @@ public class COMP2130_Assignment2 extends Application {
                 window.setScene(home);
             }
         });
-        HBox layButton = new HBox(5);
-        layButton.getChildren().addAll(btnManage, btnBack);
+        VBox layButton = new VBox(10);
+        layButton.getChildren().addAll(btnManage, btnDetails);
+
+        HBox layBack = new HBox();
+        layBack.getChildren().add(btnBack);
+        layBack.setAlignment(Pos.CENTER);
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(layName, layBday, layButton);
+        layout.getChildren().addAll(layName, layBday, layButton, layBack);
 
         viewOne = new Scene(layout, 500, 500);
         window.setScene(viewOne);
@@ -725,6 +758,89 @@ public class COMP2130_Assignment2 extends Application {
 
         search = new Scene(layout, 500, 500);
         window.setScene(search);
+
+    }
+
+    public void displayByCity(Stage window, Contact[] cList) {
+
+        VBox[] layVert = new VBox[cList.length];
+        for (int i = 0; i < cList.length; i++) {
+            Contact con = cList[i];
+
+            //setting up name
+            Label lblfullName = new Label("Contact Name:");
+            Label lblName = new Label(cList[i].getFirstName() + " " + cList[i].getLastName());
+            lblfullName.setMinSize(140, 10);
+            lblName.setMinSize(140, 10);
+            HBox layName = new HBox(20);
+            layName.getChildren().addAll(lblfullName, lblName);
+
+            //setting up birthday
+            Label lblBday = new Label("Date of Birth:");
+            Label lblBirthday = new Label(cList[i].getBirthday().getMonthLongForm() + " " + cList[i].getBirthday().getDay() + ", "
+                    + cList[i].getBirthday().getYear());
+            lblBday.setMinSize(140, 10);
+            lblBirthday.setMinSize(140, 10);
+            HBox layBirthday = new HBox(20);
+            layBirthday.getChildren().addAll(lblBday, lblBirthday);
+
+            Button btnDetails = new Button("View Contact Details");
+            btnDetails.setOnAction(e -> displayAllDetails(window, con));
+
+            layVert[i] = new VBox(10);
+            layVert[i].getChildren().addAll(layName, layBirthday, btnDetails);
+
+        }
+
+        Button btnBack = new Button("Back");
+        btnBack.setOnAction(e -> window.setScene(searchCity));
+
+        VBox layDisplay = new VBox(30);
+        layDisplay.getChildren().addAll(layVert);
+
+        VBox layBack = new VBox(10);
+        layBack.getChildren().add(btnBack);
+        layBack.setAlignment(Pos.CENTER);
+        layDisplay.getChildren().add(layBack);
+
+        viewByCity = new Scene(layDisplay, 500, 500);
+        window.setScene(viewByCity);
+    }
+
+    public void searchCity(Stage window, ContactManager cm) {
+
+        //setting up city
+        Label lblCity = new Label("City:");
+        TextField txtCity = new TextField();
+        lblCity.setMinSize(140, 10);
+        HBox layCity = new HBox(20);
+        layCity.getChildren().addAll(lblCity, txtCity);
+
+        //setting up buttons
+        Button btnSearch = new Button("Search");
+        Button btnBack = new Button("Back");
+        HBox layButton = new HBox(5);
+        layButton.getChildren().addAll(btnSearch, btnBack);
+        layButton.setAlignment(Pos.CENTER);
+
+        btnBack.setOnAction(e -> window.setScene(home));
+
+        btnSearch.setOnAction(e -> {
+            Contact[] conList = cm.findByCity(txtCity.getText());
+
+            if (conList != null) {
+                displayByCity(window, conList);
+            } else {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setContentText("No Contact was found in this city!");
+                alert.showAndWait();
+            }
+        });
+
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(layCity, layButton);
+        searchCity = new Scene(layout, 500, 500);
+        window.setScene(searchCity);
 
     }
 

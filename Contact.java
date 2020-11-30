@@ -107,8 +107,8 @@ public class Contact {
         s += "Work Phone: " + workPhone + "\n";
         s += "Home Address: " + homeAddress + "\n";
         s += "Email: " + email + "\n";
-        s += "Date of Birth: " + birthday + "\n";
-        s += "Additional Notes: " + notes + "\n";
+        s += birthday + "\n";
+        s += "Additional Notes: " + notes;
         return s;
     }
 }
