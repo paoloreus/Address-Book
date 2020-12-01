@@ -17,11 +17,11 @@ public class Address {
     public String country;
     
     public Address(String st1, String st2, String city, String postCode, String prov, String country){
-        streetInfo1 = st1;
-        streetInfo2 = st2;
+        this.streetInfo1 = st1;
+        this.streetInfo2 = st2;
         this.city = city;
-        postalCode = postCode;
-        province = prov;
+        this.postalCode = postCode;
+        this.province = prov;
         this.country = country;
     }
     
@@ -30,7 +30,7 @@ public class Address {
     public String toString(){
         String s = "";
         
-        s += "Address: ";
+        //s += "Address: ";
         s += "Street: " + streetInfo1 + " " + streetInfo2 + "\n";
         s += "City: " + city + "\n";
         s += "Postal Code: " + postalCode + "\n";

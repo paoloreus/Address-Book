@@ -21,6 +21,7 @@ public class ContactManager {
         
     }
     
+    //adds a contact as long as there is enough space
     public boolean addContact(String firstName, String lastName, String homePhone, String workPhone, Address homeAddress,
     String email, MyDate birthday, String notes){
         
@@ -33,6 +34,7 @@ public class ContactManager {
         return false;
     }
     
+    //returns a list of contacts
     public Contact[] getContacts(){
         return contactList;
     }
@@ -41,6 +43,7 @@ public class ContactManager {
         return numContacts;
     }
     
+    //searches for a contact based on first name and last name
     public Contact findContact(String firstN, String lastN){
         for(int i = 0; i < numContacts; i++){
             if(firstN.equals(contactList[i].getFirstName()) && lastN.equals(contactList[i].getLastName())){
@@ -51,6 +54,7 @@ public class ContactManager {
         return null;
     }
     
+    //deletes a contact based on the first name and last name;
     public boolean deleteContact(String firstN, String lastN){
         
         for(int i = 0; i < numContacts; i++){
@@ -64,6 +68,8 @@ public class ContactManager {
         return false;
     }
     
+    //creates an array of contacts that live in a specific city
+    //returns that array
     public Contact[] findByCity(String city){
         
         Contact[] temp = new Contact[maxContacts];

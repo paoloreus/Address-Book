@@ -5,37 +5,28 @@
  */
 package comp2130_assignment2;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
+
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import static javax.swing.text.StyleConstants.Italic;
 
 public class COMP2130_Assignment2 extends Application {
-
+    
+    //setting up components
+    
     Button btnAdd;
     Button btnDelete;
     Button btnEdit;
@@ -43,16 +34,16 @@ public class COMP2130_Assignment2 extends Application {
     Button btnFind;
     Button btnView;
 
-    Scene home;
-    Scene addPage;
-    Scene view;
-    Scene search;
-    Stage window;
-    Scene viewOne;
-    Scene searchCity;
-    Scene viewByCity;
-    Scene displayAll;
-    Scene display;
+    Scene home;                 //home scene
+    Scene addPage;             //scene for when user adds a new contact
+    Scene view;               //scene for when user would like to view all contacts
+    Scene search;            //scene for when user would like to search for a contact by name        
+    Scene viewOne;          //scene to display just one contact based on the search by name
+    Scene searchCity;      //scene for when user would like to search for contacts within a city
+    Scene viewByCity;     //scene to display a list of contacts based on the search by city
+    Scene displayAll;    //scene to display all details 
+    
+    Stage window;     //main stage
 
     ContactManager cm;
     Contact c;
@@ -149,7 +140,23 @@ public class COMP2130_Assignment2 extends Application {
         }
     }
 
-    //this method checks if a field is numeric
+    //this method validates email addresses
+    public boolean isValidEmail(TextField txt) {
+
+        if (!isValid(txt)) {
+            return false;
+        }
+
+        if (!txt.getText().matches("^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@"
+                + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$")) {
+
+            return false;
+        }
+
+        return true;
+    }
+
+    //this method checks if a field is numeric/alphabetic
     public boolean isValidNumeric(TextField txt, int type) {
 
         //type 1 means numeric field
@@ -206,7 +213,8 @@ public class COMP2130_Assignment2 extends Application {
 
         return true;
     }
-
+    
+    //validates phone numbers and postal codes
     public boolean isValidPhone(TextField txt, int type) {
 
         //type 1 is for phone numbers
@@ -223,7 +231,8 @@ public class COMP2130_Assignment2 extends Application {
 
         return true;
     }
-
+    
+    //use this to make an error label visible and display the appropriate message
     public void showLimited(Label lbl, String message) {
         //type 1 if alphabetic
         //type 2 if numeric
@@ -237,7 +246,8 @@ public class COMP2130_Assignment2 extends Application {
         visiblePause.play();
 
     }
-
+    
+    //adding a new contact
     public void addPage(Stage window, boolean isEditable, Contact c) {
 
         //setting up first name and associated error label
@@ -443,7 +453,7 @@ public class COMP2130_Assignment2 extends Application {
             if (isValidNumeric(txtFirst, 1) && isValidNumeric(txtLast, 1) && isValidPhone(txtPhone, 1)
                     && isValid(txtAddress1) && isValidNumeric(txtCity, 1)
                     && isValidPhone(txtPostal, 2) && isValidNumeric(txtProvince, 1) && isValidNumeric(txtCountry, 1)
-                    && isValid(txtEmail) && isValidDate(txtYear, 3)
+                    && isValidEmail(txtEmail) && isValidDate(txtYear, 3)
                     && isValidDate(txtMonth, 2) && isValidDate(txtDay, 1)) {
 
                 //making a new address object using the address related input
@@ -550,6 +560,8 @@ public class COMP2130_Assignment2 extends Application {
                 //issues with email?
                 if (!isValid(txtEmail)) {
                     showLimited(emailErr, "Email cannot be empty");
+                } else if (!isValidEmail(txtEmail)) {
+                    showLimited(emailErr, "Invalid Email Address");
                 }
 
                 //issues with date of birth?
@@ -581,7 +593,8 @@ public class COMP2130_Assignment2 extends Application {
         window.setScene(addPage);
 
     }
-
+    
+    //displays a list of all registered contacts, this method includes an editable version
     public void display(Stage window, boolean isEditable, ContactManager cm) {
         //this is an array of Vbox layouts that will dynamically expand
         //as we add more content based on the number of contacts
@@ -638,11 +651,12 @@ public class COMP2130_Assignment2 extends Application {
         window.setScene(view);
 
     }
-
+    
+    //displays all details about the specific contact the user selects to view
     public void displayAllDetails(Stage window, Contact c) {
 
         Label lblDetails = new Label(c.toString());
-        Button btnBack = new Button("Back");
+        Button btnBack = new Button("Back to main");
         btnBack.setOnAction(e -> window.setScene(home));
 
         VBox layDisplay = new VBox(30);
@@ -655,7 +669,8 @@ public class COMP2130_Assignment2 extends Application {
         displayAll = new Scene(layDisplay, 500, 500);
         window.setScene(displayAll);
     }
-
+    
+    //displays one contact based on the search, this method includes a deletable version
     public void displayOne(Stage window, boolean isDeletable, Contact c) {
 
         //setting up full name
@@ -676,6 +691,8 @@ public class COMP2130_Assignment2 extends Application {
         layBday.getChildren().addAll(lblBday, lblBirthday);
 
         //setting up button
+        //if this method was called from a deletable request then 
+        //this will be performing deleting functions instead
         Button btnManage = new Button("Manage Contact");
         if (isDeletable) {
             btnManage.setText("Delete Contact");
@@ -709,7 +726,8 @@ public class COMP2130_Assignment2 extends Application {
         window.setScene(viewOne);
 
     }
-
+    
+    //searches for a contact, whether it's to view or to delete
     public void search(Stage window, boolean isDeletable, ContactManager cm) {
 
         //setting up first name
@@ -761,7 +779,8 @@ public class COMP2130_Assignment2 extends Application {
         window.setScene(search);
 
     }
-
+    
+    //displays a list of users that live in a specific city
     public void displayByCity(Stage window, Contact[] cList) {
 
         VBox[] layVert = new VBox[cList.length];
@@ -807,7 +826,8 @@ public class COMP2130_Assignment2 extends Application {
         viewByCity = new Scene(layDisplay, 500, 500);
         window.setScene(viewByCity);
     }
-
+    
+    //searches for users that live in a specific city
     public void searchCity(Stage window, ContactManager cm) {
 
         //setting up city
